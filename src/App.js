@@ -7,7 +7,8 @@ class App extends Component {
   state = {
     firstName: 'John',
     lastName: 'Doe',
-    imageURL: "https://randomuser.me/api/portraits/men/83.jpg"
+    imageURL: "https://randomuser.me/api/portraits/men/2.jpg",
+    editable: false
   }
 
   onChangeFirstName = (event) => {
@@ -31,10 +32,16 @@ class App extends Component {
   onChangeUrl = (event) => {
     console.log('URL changed!')
     const input = event.target;
-    const newUrl = input.value;
+    const newImageUrl = input.value;
     this.setState({
-      url: newUrl
+      imageURL: newImageUrl
     })
+  }
+
+  editClicked = () => {
+    this.setState(prevState => ({
+      editable: !prevState.editable
+    }))
   }
 
   render() {
@@ -47,7 +54,11 @@ class App extends Component {
         lastName = { lastName }
         imageURL={ imageURL } />
 
+        {(this.state.editable) ?
+
+      <div>
         <label>
+
           First name:
           <input type ="text" value={ firstName } onChange={ this.onChangeFirstName } />
         </label><br />
@@ -58,9 +69,13 @@ class App extends Component {
         </label><br />
 
         <label><br />
-          Image:
-          <input type ="url" />
+          Your Image:
+          <input type ="text" value={ imageURL } onChange={ this.onChangeUrl } />
         </label>
+      </div>
+        : ""
+      }
+        <button onClick={ this.editClicked }>Edit</button>
 
 
       </div>
